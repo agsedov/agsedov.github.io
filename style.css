@@ -16,7 +16,9 @@ li.e-question {
   border-bottom: 1px solid #ccc;
   padding: 5px;
 }
-
+p {
+ font: 200 20px/1.5 Helvetica, Verdana, sans-serif; 
+}
 li.e-question:hover {
   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
   border-bottom: 1px solid #dde;
@@ -59,6 +61,12 @@ li a:hover {
   display: inline;
 }
 
+.attention {
+  background:#f99;
+  border:#822;
+  padding: 10px;
+  margin: 10px;
+}
 .button:hover {
   background: #cddcee;
 }

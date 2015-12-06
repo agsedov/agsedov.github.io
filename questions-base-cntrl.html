@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<h2>Дополнительная контрольная (1 семестр ИТ)</h2>
+		<p>Вы должны ее написать, если ваша сумма баллов к концу семестра составляет&nbsp&lt&nbsp12&nbspбаллов. Контрольная проводится в конце декабря, после четвёртой. Будут даны 2 задачи из списка:</p>
+		<ol>
+			<li class="e-question">Решить систему линейных уравнений методом Гаусса.
+				<div class="collapsable">В качестве подготовки можно прорешать номер 8.1 из задачника Кострикина.</div> 
+			</li>
+			<li class="e-question">Найти все корни n-ой степени из комплексного числа.
+				<div class="collapsable">В качестве подготовки можно прорешать номер 22.7 из задачника Кострикина.</div> 
+			</li>
+			<li class="e-question">Вычислить ранг матрицы методом окаймляющих миноров
+				<div class="collapsable">В качестве подготовки можно прорешать номер 7.1 из задачника Кострикина.</div> 
+			</li>
+			<li class="e-question">Решить систему методом Крамера
+				<div class="collapsable">В качестве подготовки можно прорешать номер 8.6 из задачника Кострикина.</div> 
+			</li>
+			<li class="e-question">Решить матричное уравнение вида AXB=C
+				<div class="collapsable">В качестве подготовки можно прорешать номер 18.3 из задачника Кострикина.</div> 
+			</li>
+			<li class="e-question">Найти проекцию вектора a на плоскость b,c параллельно вектору d
+				<div class="collapsable">В качестве подготовки можно решить номер 31 из задачника Моденова и Пархоменко.</div> 
+			</li>
+			<li class="e-question">Разложить вектор по базису e<sub>1</sub>,e<sub>2</sub>…e<sub>n</sub>
+				<div class="collapsable">В качестве подготовки можно решить номер 28 из задачника Моденова и Пархоменко.</div>  
+			</li>
+			<li class="e-question">Найти объём параллелепипеда построенного на векторах a,b,c
+				<div class="collapsable">В качестве подготовки можно решить номер 190 из задачника Моденова и Пархоменко.</div> 
+			</li>
+			<li class="e-question">Найти НОД двух многочленов
+				<div class="collapsable">В качестве подготовки можно прорешать номер 25.2 из задачника Кострикина.</div> 
+			</li>
+			<li class="e-question">Найти рациональные корни многочлена
+				<div class="collapsable">В качестве подготовки можно прорешать номер 28.2 из задачника Кострикина.</div> 
+			</li>
+			<li class="e-question">Разложить многочлен на неприводимые множители над указанным полем (ℝ или ℂ)
+				<div class="collapsable">В качестве подготовки можно прорешать номер 27.1а)б)в)г) из задачника Кострикина.</div> 
+			</li>
+			<li class="e-question">Привести уравнение линии второго порядка к каноническому виду и определить её тип
+				<div class="collapsable">В качестве подготовки можно прорешать номера 805 и 807 из задачника Моденова и Пархоменко.</div> 
+			</li>
+			<p class="attention">На решение задач даётся 1 час. Нужно решить обе задачи.</p>
+		</ol>
+	</div>
+	<script>
+
+	$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip(); 
+	    $('.collapsable').hide();
+	    $('.e-question').click(function(){
+	    	$(this).children(".collapsable").toggle();
+		});
+		$('.expand-all').click(function(){
+	    	$('.e-question > .collapsable').show();
+		});
+		$('.collapse-all').click(function(){
+	    	$('.e-question > .collapsable').hide();
+		});
+	}); 
+
+	</script>
+
+
+
+</body>
+</html>
