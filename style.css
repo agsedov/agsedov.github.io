@@ -14,11 +14,12 @@ ul.e-question {
 li.e-question {
   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
   border-bottom: 1px solid #ccc;
+  padding: 5px;
 }
 
 li.e-question:hover {
   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #dde;
   background: #eeeeff;
   cursor:pointer;
 }
@@ -29,12 +30,12 @@ li.e-question:last-child {
 
 a.hint{
 	cursor:help;
-    text-decoration: none;
+  text-decoration: none;
 }
 a.hint:hover{
 	cursor:help;
-    text-decoration: none;
-    background: #ffffff;
+  text-decoration: none;
+  background: #ffffff;
 }
 
 li a:hover {
@@ -43,9 +44,29 @@ li a:hover {
 
 .collapsable {
 	font: 200 15px/1.5 Helvetica, Verdana, sans-serif;
+  border: 1px solid #cddcee;
 	padding: 10px;
 	margin: 10px;
 	background: #deedff;
+}
+
+.button {
+  font: 200 15px/1.5 Helvetica, Verdana, sans-serif;
+  border: 1px solid #cddcee;
+  padding: 5px;
+  background: #deedff;
+  cursor:pointer;
+  display: inline;
+}
+
+.button:hover {
+  background: #cddcee;
+}
+
+.button-group {
+  border: 1px solid #cddcee;
+  padding: 5px;
+  margin: 10px;
 }
 
 #wrapper {
