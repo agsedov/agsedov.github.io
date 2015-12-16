@@ -1,0 +1,49 @@
+#info-wrapper{
+	color: white;
+	right: 5px;
+	width: 400px;
+	position: absolute;
+	z-index: 100;
+	cursor:pointer;
+	background-color: rgba(0,50,0,0.7);
+	padding: 10px;
+	font-style: italic;
+	text-align: center;
+}
+#canonical{
+	text-align: center;
+}
+#formula-wrapper{
+	color: white;
+    position:absolute;
+    left:0;
+    right:0;
+    bottom: 0;
+    margin-left:auto;
+    margin-right:auto;
+
+	width: 600px;
+	position: absolute;
+	z-index: 100;
+	cursor:auto;
+	background-color: rgba(0,50,0,0.7);
+	padding: 5px;
+	font-style: italic;
+	font-size: 20px;
+}
+#update{
+	cursor:pointer;
+	color: #3090FF;
+	text-decoration: underline;
+}
+
+.coefficient {
+	//background-color: rgba(0,0,0,0.1);
+	font-size: 20px;
+	font-style: italic;
+	border: none;
+	width:40px;
+	text-align: right;
+	padding-right: 5px;
+	margin-right: 4px;
+}

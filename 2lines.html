@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Кривые второго порядка (MathBox)</title>
+  <script src="./bower_components/mathbox/build/mathbox-bundle.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="./bower_components/mathbox/build/mathbox.css">
+  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+</head>
+<body>
+  <div id="info-wrapper">
+    <div>Уравнение линии второго порядка:</div>
+    a<sub>11</sub>x<sup>2</sup>+
+    a<sub>22</sub>y<sup>2</sup>+
+    2a<sub>12</sub>xy+
+    2a<sub>13</sub>x+
+    2a<sub>23</sub>y+
+    a<sub>33</sub>=0
+  </div>
+
+  <div id="formula-wrapper">
+    <input class="coefficient" id="a11" value ="1"></input>x<sup>2</sup>+
+    <input class="coefficient" id="a22" value ="1"></input>y<sup>2</sup>+
+    <input class="coefficient" id="a12" value ="0"></input>xy+
+    <input class="coefficient" id="a13" value ="0"></input>x+
+    <input class="coefficient" id="a23" value ="0"></input>y+
+    <input class="coefficient" id="a33" value ="-1"></input>=0
+    <a id="update">Обновить>></a>
+    <div id="canonical"></div>
+  </div>
+
+  <script>
+    var a11,a12,a22,a13,a23,a33;      //Изначальные коэффициенты
+    var _a11,_a22,_a13,_a23,_a33;     //Коэффициенты после поворота.
+    var __a11,__a22,__a33;     //Коэффициенты после сдвига.
+    var phi;
+    var x_0,y_0;
+    var linetype;
+    function validate_coefficient(selector){
+      f = parseFloat($(selector).val());
+      if(!isNaN(f)){
+        return f;
+      }else{
+        return 1;
+      }
+    }
+
+    function get_coefficients(){
+      a11=validate_coefficient("#a11");
+      $("#a11").val(a11);
+
+      a12=validate_coefficient("#a12")/2;
+      $("#a12").val(a12*2);
+
+      a22=validate_coefficient("#a22");
+      $("#a22").val(a22);
+
+      if((a11==0)&&(a12==0)&&(a22==0)){
+        a11 = 1;
+        $("#a11").val(a11);
+        $("#alert").text("В уравнении линии второго порядка хотя бы один коэффициент a11,a12,a22 - не равен 0.");
+        $("#alert").show();
+      }
+
+      a13=validate_coefficient("#a13")/2;
+      $("#a13").val(a13*2);
+
+      a23=validate_coefficient("#a23")/2;
+      $("#a23").val(a23*2);
+
+      a33=validate_coefficient("#a33");
+      $("#a33").val(a33);
+    }
+
+    function round3(f){
+      return Math.round(f*1000)/1000;
+    }
+    function update_line_type(type){
+      window.linetype = type;
+      switch(type){
+        case "hyperbola":
+          $("#canonical").html("Гипербола "+(round3(__a11))+"*x<sup>2</sup>+"+(round3(__a22))+"*y<sup>2</sup>=1");
+          break;
+        case "parabola":
+          $("#canonical").text("Парабола");
+          break;
+        case "ellipse":
+          $("#canonical").html("Уравнение в канонической системе координат: "+(round3(__a11))+"*x<sup>2</sup>+"+(round3(__a22))+"*y<sup>2</sup>=1 (Эллипс)");
+          break;
+        case "zero":
+          $("#canonical").text("Пустое множество");
+          break;
+        case "crossed_lines":
+          $("#canonical").text("Пересекающиеся прямые");
+          break;
+        case "parallel_lines":
+          $("#canonical").text("Параллельные прямые");
+          break;
+        case "one_point":
+          $("#canonical").text("Одна точка");
+          break;
+      }
+    }
+    function get_canonical_view(){
+      get_coefficients();
+      phi=0;
+
+      //Поворот
+      if(a12!=0){//коэффициент при xy отличен от 0. Обнулим его поворотом.
+        
+        if(a11==a22){
+          //phi можно положить равным pi/4
+          phi=Math.PI/4;
+        }else{
+          phi=0.5*Math.atan(2*a12/(a11-a22));
+        }
+        //phi посчитан. Выразим новые коэффициенты через старые
+        var cos_p = Math.cos(phi);
+        var sin_p = Math.sin(phi);
+
+        console.log(phi);
+        console.log(cos_p);
+        console.log(sin_p);
+
+        _a11  = round3( a11*cos_p*cos_p + 2*a12*cos_p*sin_p  + a22*sin_p*sin_p);
+        _a22  = round3( a11*sin_p*sin_p - 2*a12*cos_p*sin_p  + a22*cos_p*cos_p);
+
+        _a12  = round3( -2*a11*cos_p*sin_p+2*a22*cos_p*sin_p+(cos_p*cos_p-sin_p*sin_p)*2*a12)/2;
+
+        _a13  = round3( 2*a13*cos_p + 2*a23*sin_p)/2;
+        _a23  = round3( -2*a13*sin_p + 2*a23*cos_p)/2;
+        _a33  = round3( a33);
+
+      }else{//иначе поворачивать не надо
+        _a11 = a11;
+        _a12 = a12;
+        _a22 = a22;
+        _a23 = a23;
+        _a13 = a13;
+        _a33 = a33; 
+      }
+
+      //Сдвиг
+      x_0 = (_a11!=0)? -(_a13/_a11):0;
+      y_0 = (_a22!=0)? -(_a23/_a22):0;
+      __a11 = _a11;
+      __a22 = _a22;
+      __a33 = _a33+2*x_0*_a13+2*y_0*_a23+x_0*x_0*_a11+y_0*y_0*_a22;
+
+      //Линия повернута и сдвинута в начало координат.
+      //Теперь нужно определить тип линии.
+
+      if((__a11!=0)&&(__a22!=0)){//Уравнение имеет вид __a11*x*x+__a22*y*y+__a33 = 0
+        if(__a33==0){//вырожденные случаи
+          if(__a11*__a22>0){//Это уравнение точки.
+            update_line_type("one_point");
+          }else{//Это уравнение пересекающихся прямых.
+            update_line_type("crossed_lines");
+          }
+        }else{
+          if(__a11<0){//Домножим уравнение на -1, так чтобы a11 было положительным
+            __a33 = -__a33;
+            __a22 = -__a22;
+            __a11 = -__a11;
+          }
+          if((__a22>0)&&(__a33>0)){//Это пустое множество.
+            update_line_type("zero");
+          }else{
+              if((__a22>0)&&(__a33<0)){//Это эллипс.
+                __a11 = -__a11/__a33;
+                __a22 = -__a22/__a33;
+                __a33 = -1;
+                update_line_type("ellipse");
+              }else{//Это гипербола.
+                __a11 = -__a11/__a33;
+                __a22 = -__a22/__a33;
+                __a33 = -1;
+                update_line_type("hyperbola");
+
+              }
+          }
+        }
+      }else{//Это парабола
+        update_line_type("parabola");
+        if(__a11==0){
+
+        }else{
+
+        }
+
+      }
+    }
+
+    $("#update").on("click",get_canonical_view);
+    get_canonical_view();
+
+  </script>
+  <script>
+    function line1_emitter(emit, d, i, t) {
+        switch(linetype){
+          case "hyperbola":
+            x = Math.sqrt(1/Math.abs(__a11))*Math.cosh(d)+x_0;
+            y = Math.sqrt(1/Math.abs(__a22))*Math.sinh(d)+y_0;
+            break;
+          case "parabola":
+            break;
+          case "ellipse":
+            x = NaN;
+            y = NaN;
+            break;
+          case "zero":
+            $("#canonical").text("Пустое множество");
+            x=NaN;
+            y=NaN;
+            break;
+          case "crossed_lines":
+            y=Math.sqrt(1/__a11)*Math.sqrt(__a22)*(d-x_0)+y_0;
+            x=d;
+            break;
+          case "parallel_lines":
+            x = x_0;
+            y = d;            
+            break;
+          case "one_point":
+            x = x_0;
+            y = y_0;
+            break;
+          }
+
+          x1 = x*Math.cos(phi)+y*Math.sin(phi);
+          y1 = x*Math.sin(phi)-y*Math.cos(phi);
+          emit(x1, y1);
+    }
+    function line2_emitter(emit, d, i, t) {
+        switch(linetype){
+          case "hyperbola":
+            x = -Math.sqrt(1/Math.abs(__a11))*Math.cosh(d)+x_0;
+            y = Math.sqrt(1/Math.abs(__a22))*Math.sinh(d)+y_0;
+            break;
+          case "parabola":
+            x = d;
+            y = d*d;
+            break;
+          case "ellipse":
+            x = Math.sqrt(1/__a11)*Math.cos(d*.12)+x_0;
+            y = Math.sqrt(1/__a22)*Math.sin(d*.12)+y_0;
+            break;
+          case "zero":
+            $("#canonical").text("Пустое множество");
+            x=NaN;
+            y=NaN;
+            break;
+          case "crossed_lines":
+            y=-Math.sqrt(1/__a11)*Math.sqrt(__a22)*(d-x_0)+y_0;
+            x=d;
+            break;
+          case "parallel_lines":
+            x = -x_0;
+            y = d;            
+            break;
+          case "one_point":
+            x = x_0;
+            y = y_0;
+            break;
+          }
+
+          x1 = x*Math.cos(phi)-y*Math.sin(phi);
+          y1 = x*Math.sin(phi)+y*Math.cos(phi);
+          emit(x1, y1);
+    }
+
+    function draw_lines(){
+          view.interval({
+            id: 'line1',
+            length: 164,
+            expr: line1_emitter,
+            channels: 2,
+          });
+          view.interval({
+            id: 'line2',
+            length: 164,
+            expr: line2_emitter,
+            channels: 2,
+          });
+          view.line({
+            points: '#line1',
+            color: 0x3090FF,
+            width: 1,
+          });
+          view.line({
+            points: '#line2',
+            color: 0x3090FF,
+            width: 1,
+          });
+    }
+
+    mathbox = mathBox({
+      plugins: ['core', 'controls', 'cursor'],
+      controls: {
+        klass: THREE.OrbitControls
+      },
+    });
+    three = mathbox.three;
+
+    three.camera.position.set(0, 0, 3);
+    three.renderer.setClearColor(new THREE.Color(0x113322), 1.0);
+
+    view = mathbox
+    .set({
+      focus: 3,
+    })
+    .cartesian({
+      range: [[-30, 30], [-30, 30], [-30, 30]],
+      scale: [1, 1, 1],
+    });
+
+    view.axis({
+      axis: 1,
+      detail: 30,
+    });
+
+    view.axis({
+      axis: 2,
+      detail: 30,
+    });
+    
+    draw_lines();
+
+    view.scale({
+      divide: 10,
+    })
+    view.ticks({
+      classes: ['foo', 'bar'],
+      width: 1
+    });
+
+    view.grid({
+      divideX: 30,
+      divideY: 30,
+      width: 1,
+      opacity: 0.5,
+      zBias: -5,
+    });
+
+    view.area({
+      id:'surface',
+      width: 300,
+      height: 300,
+      axes: [0, 1],
+      expr: function (emit, x, y, i, j) {
+        emit(x, y, a11*x*x+a22*y*y+2*a12*x*y+2*a13*x+2*a23*y+a33);
+      },
+      items: 4,
+      channels: 4,
+    });
+    view.surface({
+            points: '#surface',
+            color: 0xFF6666,
+            opacity: 0.5,
+            width: 1,
+          });
+
+   /* view.transform({
+      position: [0, 1, 0],
+    }).line({
+      points: '#sampler',
+      color: 0x3090FF,
+      width: 1,
+      stroke: 'dotted',
+    });
+
+    view.transform({
+      position: [0, -1, 0],
+    }).line({
+      points: '#sampler',
+      color: 0x3090FF,
+      width: 1,
+      stroke: 'dashed',
+    });*/
+
+  </script>
+</body>
+</html>
