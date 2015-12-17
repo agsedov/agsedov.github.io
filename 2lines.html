@@ -185,9 +185,9 @@
       }else{//Это парабола
         update_line_type("parabola");
         if(__a11==0){
-
+          x_0 = __a33/__a13; 
         }else{
-
+          y_0 = __a33/__a12;
         }
 
       }
@@ -201,8 +201,13 @@
     function line1_emitter(emit, d, i, t) {
         switch(linetype){
           case "hyperbola":
-            x = Math.sqrt(1/Math.abs(__a11))*Math.cosh(d)+x_0;
-            y = Math.sqrt(1/Math.abs(__a22))*Math.sinh(d)+y_0;
+            if(__a22<0){
+              x = -Math.sqrt(1/Math.abs(__a11))*Math.cosh(d)+x_0;
+              y = Math.sqrt(1/Math.abs(__a22))*Math.sinh(d)+y_0;
+            }else{
+              y = -Math.sqrt(1/Math.abs(__a11))*Math.cosh(d)+y_0;
+              x = Math.sqrt(1/Math.abs(__a22))*Math.sinh(d)+x_0;              
+            }
             break;
           case "parabola":
             break;
@@ -229,19 +234,24 @@
             break;
           }
 
-          x1 = x*Math.cos(phi)+y*Math.sin(phi);
-          y1 = x*Math.sin(phi)-y*Math.cos(phi);
+          x1 = x*Math.cos(phi)-y*Math.sin(phi);
+          y1 = x*Math.sin(phi)+y*Math.cos(phi);
           emit(x1, y1);
     }
     function line2_emitter(emit, d, i, t) {
         switch(linetype){
           case "hyperbola":
-            x = -Math.sqrt(1/Math.abs(__a11))*Math.cosh(d)+x_0;
-            y = Math.sqrt(1/Math.abs(__a22))*Math.sinh(d)+y_0;
+            if(__a22<0){
+              x = Math.sqrt(1/Math.abs(__a11))*Math.cosh(d)+x_0;
+              y = -Math.sqrt(1/Math.abs(__a22))*Math.sinh(d)+y_0;
+            }else{
+              y = Math.sqrt(1/Math.abs(__a11))*Math.cosh(d)+y_0;
+              x = -Math.sqrt(1/Math.abs(__a22))*Math.sinh(d)+x_0;              
+            }
             break;
           case "parabola":
-            x = d;
-            y = d*d;
+            //x = d+x_0;
+            //y = d*d+y_0;
             break;
           case "ellipse":
             x = Math.sqrt(1/__a11)*Math.cos(d*.12)+x_0;
@@ -344,13 +354,16 @@
       zBias: -5,
     });
 
-    view.area({
+    /*view.area({
       id:'surface',
       width: 300,
       height: 300,
       axes: [0, 1],
       expr: function (emit, x, y, i, j) {
-        emit(x, y, a11*x*x+a22*y*y+2*a12*x*y+2*a13*x+2*a23*y+a33);
+        z = a11*x*x+a22*y*y+2*a12*x*y+2*a13*x+2*a23*y+a33;
+        //if(Math.abs(z)<500){
+          emit(x, y, z);
+        //}
       },
       items: 4,
       channels: 4,
@@ -360,7 +373,7 @@
             color: 0xFF6666,
             opacity: 0.5,
             width: 1,
-          });
+          });*/
 
    /* view.transform({
       position: [0, 1, 0],
