@@ -10,18 +10,19 @@ ul.e-question {
   margin: 0;
   padding: 0;
 }
+
+p.hel {
+ font: 200 20px/1.5 Helvetica, Verdana, sans-serif; 
+}
+
  
 li.e-question {
   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
   border-bottom: 1px solid #ccc;
   padding: 5px;
 }
-p.warn {
- font: 200 20px/1.5 Helvetica, Verdana, sans-serif; 
-}
 
 li.e-question:hover {
-  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
   border-bottom: 1px solid #dde;
   background: #eeeeff;
   cursor:pointer;

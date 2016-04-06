@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div id="wrapper">
+<h2>Лабораторные работы (2015/2016 - второй семестр)</h2>
+<p class="hel">Как и в первом семестре, лабораторная работа снимает на экзамене 1 теоретический вопрос.</p>
+
+<ol class="e-theme">
+	<li class="e-theme">
+		<b>Трассировка лучей.</b>
+		<p class="hel">Во всех лабораторных работах этой группы нужно переписать готовый <a href="./viewShader.rar">трассировщик</a>.</p>
+		<p class="hel">Изменять нужно файл "ColorFragmentShader.FragmentShader". В папке scripts лежит настроечный файл main.lua, где можно выставить полноэкранный режим или поменять разрешение. </p>
+                
+		<ol>
+			<li class="e-question">Стеклянный куб.
+			<div class="collapsable">Замените красный шарик на прозрачный куб. Материал куба преломляет луч, не отражая его.</div> 
+			</li>
+			<li class="e-question">Зеркальный тетраэдр. 
+			<div class="collapsable">Замените красный шарик на тетраэдр, грани которого отражают лучи.</div> 
+			</li>
+			<li class="e-question">Параболическое зеркало. 
+			<div class="collapsable">Добавьте на сцену параболическое зеркало.</div> 
+			</li>
+			<li class="e-question">Небосвод. 
+			<div class="collapsable">Пользуясь, например, шумом Перлина добавьте на сцену небо и облака.</div> 
+			</li>
+			<li class="e-question">Дым. 
+			<div class="collapsable">Добавьте на сцену объёмный туман.</div> 
+			</li>
+		</ol>
+	</li>
+	<li class="e-theme">
+		<b>Прочие лабораторные.</b>
+		<ol>
+			<li class="e-question">Жорданова форма.
+			<div class="collapsable">Привести данную матрицу к Жордановой форме и вывести соответствующий базис.</div> 
+			</li>
+			<li class="e-question">Поверхности второго порядка. 
+			<div class="collapsable">Определить тип поверхности заданной произвольным уравнением. Построить график сечения произвольной плоскостью.</div> 
+			</li>
+		</ol>
+	</li>
+</ol>
+</div>
+<script>
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+    $('.e-question > .collapsable').hide();
+    $('.e-question').click(function(){
+    	$(this).children(".collapsable").toggle();
+	});
+	$('.expand-all').click(function(){
+    	$('.e-question > .collapsable').show();
+	});
+	$('.collapse-all').click(function(){
+    	$('.e-question > .collapsable').hide();
+	});
+}); 
+
+</script>
+
+
+
+</body>
+</html>
