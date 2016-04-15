@@ -1,0 +1,133 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+.matrix
+{
+  height:200px;
+  margin-top: 15px;
+  width:250px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.matrix-content {
+  float: left;
+  height:200px;
+  width:210px;
+}
+.matrix-left {
+  float: left;
+  height:200px;
+  width:10px;
+  border-left:2px solid #000;
+  border-top:2px solid #000;
+  border-bottom:2px solid #000;
+  margin-right:5px;
+}
+.matrix-right
+{
+  float: left;
+  height:200px;
+  width:10px;
+  border-right:2px solid #000;
+  border-top:2px solid #000;
+  border-bottom:2px solid #000;
+  margin-left:5px;
+}
+.minput
+{
+  font-size:25px;
+  width:55px;
+  margin-left: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+</style>
+</head>
+
+<body>
+<script>
+var Matrix = [[0,1,0],[1,0,0],[0,0,1]];
+var onInputChange = (element, i,j) => {
+  var new_val = parseFloat(element.value);
+  if(!new_val) new_val = 0;
+	Matrix[i][j] = new_val;
+  element.value = new_val;
+	draw(img);
+}
+
+
+
+var img = new Image();
+img.src = './pencils.jpg';
+img.onload = function() {
+  draw(this);
+};
+
+function draw(img) {
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+
+  ctx.drawImage(img, 0, 0);
+  var imageData = ctx.getImageData(0,0,canvas.width, canvas.height);
+  var data = imageData.data;
+  
+  var r,g,b;
+  for (var i = 0; i < data.length; i += 4) {
+    r = data[i];    
+    g = data[i + 1];
+    b = data[i + 2];
+
+    data[i]     = r*Matrix[0][0]+g*Matrix[0][1]+b*Matrix[0][2];
+    data[i + 1] = r*Matrix[1][0]+g*Matrix[1][1]+b*Matrix[1][2];
+    data[i + 2] = r*Matrix[2][0]+g*Matrix[2][1]+b*Matrix[2][2];
+  }
+  ctx.putImageData(imageData, 0, 0); 
+}
+</script>
+
+<div style="width:910px;margin:auto">
+	<div style="width:300px;float:left">
+		<img src="./pencils.jpg">
+	</div>
+	<div style="width:300px;float:left">
+		<div class="matrix">
+			<div class="matrix-left"></div>
+			<div class="matrix-content">
+                <input class="minput" onBlur="onInputChange(this,0,0)" value="0"/>
+                <input class="minput" onBlur="onInputChange(this,0,1)"/value="1">
+                <input class="minput" onBlur="onInputChange(this,0,2)"/value="0"><br>
+                <input class="minput" onBlur="onInputChange(this,1,0)"/value="1">
+                <input class="minput" onBlur="onInputChange(this,1,1)" value="0"/>
+                <input class="minput" onBlur="onInputChange(this,1,2)" value="0"/><br>
+                <input class="minput" onBlur="onInputChange(this,2,0)" value="0"/>
+                <input class="minput" onBlur="onInputChange(this,2,1)" value="0"/>
+                <input class="minput" onBlur="onInputChange(this,2,2)" value="1"/><br>
+            </div>
+            <div class="matrix-right"></div>
+		</div>
+	</div>
+	<div style="width:300px;float:left">
+		<canvas id="canvas" width="300" height="240"/>
+	</div>
+
+  <p>
+  Тут (r',g',b')<sup>T</sup> = A*(r,g,b)<sup>T</sup>, где A — матрица, <a href="https://ru.wikipedia.org/wiki/RGB">(r,g,b)</a><sup>T</sup> — вектор-столбец исходного цвета, (r',g',b')<sup>T</sup> — вектор-столбец нового цвета.
+  </p>
+
+  <ul>
+    Попробуйте подставить следующие матрицы:
+    <li>Единичная
+    </li>
+    <li>Матрица перестановок
+    </li>
+    <li>Матрицы с рангом 2. Что общего у результатов? Почему?
+    </li>
+    <li>Матрицы с рангом 1. Что общего у результатов? Почему?
+    </li>
+    <li>Стохастические. (сумма элементов в каждой строке равна 1, все элементы положительны). Какие цвета после умножения не изменятся? Почему?
+    </li>
+  </ul>
+</div>
+</body>
+</html>
