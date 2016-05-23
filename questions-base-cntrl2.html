@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<h2>Дополнительная контрольная (2 семестр ИТ)</h2>
+		<p class="warn">Если ваша сумма баллов к концу семестра составляет&nbsp&lt&nbsp9&nbspбаллов, то вы должны её написать. Контрольная проводится 30 мая. Будут даны 2 задачи из списка:</p>
+		<ol>
+			<li class="e-question">Выяснить взаимное расположение (прямой|плоскости) и (прямой|плоскости).
+				<div class="collapsable"></div> 
+			</li>
+			<li class="e-question">Найти угол между (прямой|плоскостью) и плоскостью.
+				<div class="collapsable"></div> 
+			</li>
+			<li class="e-question">Найти размерности суммы и пересечения линейных подпространств ℝ<sub>n</sub>.
+				<div class="collapsable"></div> 
+			</li>
+			<li class="e-question">Найти ортогональный базис линейного подпространства ℝ<sub>n</sub>.
+				<div class="collapsable"></div> 
+			</li>
+			<li class="e-question">Определить тип поверхности второго порядка методом сечений.
+				<div class="collapsable"></div> 
+			</li>
+			<li class="e-question">Найти собственные значения и собственные подпространства линейного преобразования. Найти базис в котором матрица линейного преобразования имеет диагональный вид (если такой существует).
+				<div class="collapsable"></div> 
+			</li>
+			<li class="e-question">Найти Жорданову матрицу линейного преобразования и соответствующий базис.
+				<div class="collapsable"></div> 
+			</li>
+			<li class="e-question">Привести квадратичную форму к (каноническому|нормальному) виду.
+				<div class="collapsable"></div> 
+			</li>
+			<li class="e-question">Привести квадратичную форму к главным осям.
+				<div class="collapsable"></div> 
+			</li>		
+			<p class="attention warn">На решение задач даётся 1 час. Нужно решить обе задачи.</p>
+		</ol>
+	</div>
+	<script>
+
+	$(document).ready(function(){
+	    $('[data-toggle="tooltip"]').tooltip(); 
+	    $('.collapsable').hide();
+	    $('.e-question').click(function(){
+	    	$(this).children(".collapsable").toggle();
+		});
+		$('.expand-all').click(function(){
+	    	$('.e-question > .collapsable').show();
+		});
+		$('.collapse-all').click(function(){
+	    	$('.e-question > .collapsable').hide();
+		});
+	}); 
+
+	</script>
+
+
+
+</body>
+</html>
