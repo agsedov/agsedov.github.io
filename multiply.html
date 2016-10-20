@@ -20,6 +20,16 @@
   				margin-left: auto; 
   				margin-right: auto; 
 			}
+			.panel{
+				position: absolute;
+				color:white;
+				width: 600px;
+  				left: 0; 
+  				right: 0;
+  				margin-left: auto; 
+  				margin-right: auto; 
+  				bottom: 50px;
+			}
 			.reset{
 				color:white;
 			}
@@ -30,7 +40,11 @@
 	</head>
 	<body>
 	<div class="comm">
-		Матрица поворота кубика справа получается в результате произведения матриц поворота левого и среднего кубика. <a class="reset" href="#" onclick="reset()">Приравнять матрицы к единичным.</a>
+		Матрица поворота кубика справа получается в результате произведения матриц поворота левого и среднего кубика. 
+	</div>
+	<div class="panel">
+		<a class="reset" href="#" onclick="reset()">Приравнять матрицы к единичным</a>
+		<a class="reset" href="#" onclick="switc()">Поменять матрицы местами</a>
 	</div>
 		<script src="https://threejs.org/build/three.min.js"></script>
 
@@ -64,11 +78,17 @@
 				cube.renderer.domElement.addEventListener('mousemove',this.onMouseMove.bind(this));
 				document.addEventListener('mouseup',this.onMouseUp.bind(this));
 				cube.renderer.domElement.addEventListener('mousedown',this.onMouseDown.bind(this));
-			}
+			};
 			function reset(){
 				cube1.setRotation(new THREE.Quaternion(0,0,0,1));
 				cube2.setRotation(new THREE.Quaternion(0,0,0,1));
 				cube3.setRotation(new THREE.Quaternion(0,0,0,1));
+			}
+			function switc(){
+				var t = new THREE.Quaternion(0,0,0,1);
+				t.copy(cube1.rotation);
+				cube1.setRotation(cube2.rotation);
+				cube2.setRotation(t);
 			}
 			function CubeWidget(material,onRotationChanged){
 				this.updateSize = function(){
