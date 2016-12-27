@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<h2>Лабораторные работы (2016/2017 - первый семестр)</h2>
+		<p class="hel">Лабораторная работа снимает на экзамене 1 теоретический вопрос.</p>
+
+		<ol class="e-theme">
+			<li class="e-question">Метод Штрассена.
+				<div class="collapsable">Во входных файлах хранятся две прямоугольные матрицы m*n и n*k. 
+                                  Требуется рекурсивно перемножить их методом Штрассена и вывести результат в третий файл.</div> 
+			</li>
+			<li class="e-question">Трёхмерный граф. 
+				<div class="collapsable">Во входном файле хранятся координаты вершин графа и информация о их смежности. 
+                                  Нужно вывести вывести изображение графа в перспективной проекции. Должна быть возможность вращать сцену
+                                  и перемещаться по ней.</div> 
+			</li>
+		</ol>
+	</div>
+<script>
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+    $('.e-question > .collapsable').hide();
+    $('.e-question').click(function(){
+    	$(this).children(".collapsable").toggle();
+	});
+	$('.expand-all').click(function(){
+    	$('.e-question > .collapsable').show();
+	});
+	$('.collapse-all').click(function(){
+    	$('.e-question > .collapsable').hide();
+	});
+}); 
+
+</script>
+</body>
+</html>
