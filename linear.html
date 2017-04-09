@@ -1,0 +1,149 @@
+<html>
+<head>
+	<meta name="viewport" content="width=500px, user-scalable=no" />
+	<style type="text/css">
+		body{
+			background: linear-gradient(141deg, #da936b 0%, #ffce9e 51%, rgb(255, 208, 171) 75%);
+		}
+		.matrix
+		{
+			z-index: 10;
+			bottom: 15px;
+			position: fixed;
+			background: #ffce9e;
+			left: 50%;
+			margin-left: -85px;
+		}
+		.matrix-content {
+			float: left;
+			height:140px;
+
+		}
+		.matrix-left {
+			float: left;
+			height:140px;
+			width:10px;
+			border-left:2px solid #000;
+			border-top:2px solid #000;
+			border-bottom:2px solid #000;
+
+			margin-left: 5px;
+		}
+		.matrix-right
+		{
+			float: left;
+			height:140px;
+			width:10px;
+			border-right:2px solid #000;
+			border-top:2px solid #000;
+			border-bottom:2px solid #000;
+			margin-left:5px;
+		}
+		.minput
+		{
+			font-size:25px;
+			width:55px;
+			margin-left: 10px;
+			margin-top: 15px;
+			margin-bottom: 15px;
+			text-align: center;
+		}
+
+		#object1 {
+			position: absolute;
+			transform-origin: 0 0;
+			transform: matrix(1, 0, 0, 1, 0, 0);
+			opacity: 0.2;
+		}
+
+		#coordinates {
+			z-index: 5;
+			opacity: 0.2;
+			position: absolute;
+			transform-origin: 0 0;
+			transform: matrix(1, 0, 0, 1, 0, 0);
+		}
+		#coords2 {
+			z-index: 9;
+			position: absolute;
+			transform-origin: 0 0;
+			transform: matrix(1, 1, 0, 1, 0, 0);
+		}
+
+		#object2 {
+			z-index: 7;
+			position: absolute;
+			transform-origin: 0 0;
+			transform: matrix(1, 1, 0, 1, 0, 0)
+		}
+
+		#origin {
+			position: fixed;
+			left:50%;
+			top: 20%;
+		}
+	</style>
+	<script type="text/javascript">
+		var Matrix = [[1,1],[0,1]];
+		function applyMatrix(obj,matrix,tr_x,tr_y){
+			obj.style.transform = "matrix("+matrix[0][0]+", "+matrix[0][1]+","
+			+matrix[1][0]+", "+matrix[1][1]+", "+String(tr_x)+", "+String(tr_y)+")";
+		}
+		var onInputChange = function(element, i,j){
+			v = element.value;
+			if(v.length==0||v[v.length-1]=="."||v=="-")
+				return;
+			var new_val = parseFloat(v);
+			if(!new_val) new_val = 0;
+			Matrix[i][j] = new_val;
+			element.value = new_val;
+			object2 =  document.getElementById("object2");
+			coords2 =  document.getElementById("coords2");
+			applyMatrix(object2,Matrix,0,0);
+			applyMatrix(coords2,Matrix,0,0);
+		}
+		window.onload = function(){
+			object2 =  document.getElementById("object2");
+			coords2 =  document.getElementById("coords2");
+			applyMatrix(object2,Matrix,0,0);
+			applyMatrix(coords2,Matrix,0,0);
+		}
+	</script>
+</head>
+<body>
+<div id = "origin">
+	<div id="object1">
+		<img src="chessboard.png"/>
+	</div>
+	
+	<div id="object2">
+		<img src="chessboard.png"/>
+	</div>
+
+	<div id="coordinates">
+		<img src="coords.png"/>
+	</div>
+
+	<div id="coords2">
+		<img src="coords.png"/>
+	</div>
+
+</div>
+<div class="matrix">
+	<div class="matrix-left"></div>
+	<div class="matrix-content">
+		<input class="minput" onInput="onInputChange(this,0,0)" value="1"/>
+		<input class="minput" onInput="onInputChange(this,1,0)" value="0"/><br>
+		<input class="minput" onInput="onInputChange(this,0,1)" value="1"/>
+		<input class="minput" onInput="onInputChange(this,1,1)" value="1"/><br>
+	</div>
+	<div class="matrix-right"></div>
+	<div class="matrix-left"></div>
+	<div class="matrix-content">
+		<div class="minput">x</div><br><div class="minput">y</div>
+	</div>
+	<div class="matrix-right"></div>
+</div>
+
+</body>
+</html>
