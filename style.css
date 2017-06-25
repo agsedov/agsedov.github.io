@@ -63,6 +63,18 @@ li a:hover {
   display: inline;
 }
 
+.sm-img{
+  width:700px;
+}
+
+.red{
+  color: red;
+}
+
+.green{
+  color: green;
+}
+
 .attention {
   background:#f99;
   border:#822;
