@@ -107,7 +107,7 @@ li a:hover {
 .th{
   background: #e0f2f1;
   margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: .5em;
   padding: 1em;
 }
 
@@ -117,11 +117,28 @@ li a:hover {
    font-style: normal;
 }
 
+.proof{
+  background: #e0f2f1;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.proof:before {
+   content: "Доказательство:";
+   font-weight: bold;
+   font-style: normal;
+}
+
 .def{
   padding: 1em;
   background: #e8f5e9;
   margin-top: 1em;
   margin-bottom: 1em;
+}
+
+.def:target{
+  border: 1px solid red;
 }
 
 .def:before {
