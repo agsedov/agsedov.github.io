@@ -117,6 +117,14 @@ li a:hover {
    font-style: normal;
 }
 
+.th-small:before {
+  content: "Утверждение.";
+}
+
+.th-then:before {
+  content: "Следствие.";
+}
+
 .proof{
   background: #e0f2f1;
   margin-top: 0.5em;
