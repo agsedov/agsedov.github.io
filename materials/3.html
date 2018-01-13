@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <style type="text/css">
+    li.spl{
+        display: list-item;
+    }
+    </style>
+</head>
+<body>
+<div id="wrapper" class="m-shadow">
+    <h2>Комплексные числа</h2>
+    <h3>Множество комплексных чисел и операции на нем.</h3>
+    <div class="def" id='defcomplex'>
+        Множеством комплексных чисел $\mathbb{C}$ называется множество всевозможных упорядоченных пар действительных чисел $(a,b)$ с введёнными на нём операциями комплексного сложения и комплексного умножения: 
+            $$(a,b) + (c,d) = (a+c, b+d)$$ 
+            $$(a,b)*(c,d) = (ac-bd, bc+ad)$$
+    </div>
+    <div class="def">
+        Комплексное число $i = (0, 1)$ называется комплексной единицей.
+    </div>
+    <p>Заметим, что $(a,0) + (b,0) = (a+b, 0)$ и $(a,0)*(b,0) = (a*b,0)$. Комплексные числа вида $(a,0)$ будем рассматривать как действительные числа $a$.</p> 
+    <p>Наконец заметим, что $(a,b) = (a,0)*(1,0) + (b,0)*(0,1)$. Значит, в новых обозначениях - $$(a,b) = a + bi$$</p>
+    <p>Будем использовать такую запись дальше, не забывая что каждое комплексное число можно рассматривать как упорядоченную пару действительных чисел.</p>
+    <div class="th th-small"> <p>$\{\mathbb{C},+,-\}$ - это поле.</p>
+    </div>
+    <div class="proof">
+        Аксиомы поля последовательно доказываются с использованием определения комплексного сложения и умножения и аксиом сложения и умножения для действительных чисел. Например, коммутативность сложения - $ (a+bi) + (c+di) = a+c + (b+d)*i = c+a + (d+b)*i = (c+di) + (a+ bi)$. 
+        <p>Отметим только, как вычисляются $z^{-1}$ и $-z$:</p>
+            $$-(a+bi) = -a-bi$$
+            $$(a+bi)^{-1} = (a-bi)/(a^2+b^2)$$
+    </div>
+    <h3>Действительная и мнимая части комплексного числа. Комплексно-сопряженное число. Модуль и аргумент комплексного числа.</h3>
+    <div class="def">
+        Если $z = a+bi \in \mathbb{C}$, то $a$ называется действительной частью $z$, а $b$ называется мнимой частью $z$. Введём два <a href="./1.html#def1">отображения</a> для получения этих частей:
+        $$Re(a+bi) = a; Re:\mathbb{C} \rightarrow \mathbb{R} $$
+        $$Im(a+bi) = b; Im:\mathbb{C} \rightarrow \mathbb{R} $$
+    </div>
+    <div class="def">
+        Число $\bar{z}$ называется комплексно-сопряженным к числу $z = a + bi$, если $\bar{z} = a - bi$.
+    </div>
+    <p>$(a + bi)*(a - bi) = a^2 + b^2$, так что произведение $z*\bar{z}$ всегда принадлежит $\mathbb{R}$. $z+\bar{z}$ тоже.</p>
+    <div class="def">
+        Модулем комплексного числа $z = a + bi$ называется действительное число $|z| = \sqrt{a^2 + b^2}$
+    </div>
+    <div class="def">
+        Аргументом комплексного числа $z = a + bi$ называется угол между вектором $(a,b)$ и действительной осью (вектором $(1,0)$)
+    </div>
+    <h3>Тригонометрическая форма комплексного числа. Ее применение для умножения, деления, возведения в степень и извлечения корней из комплексных чисел. Формула Муавра.</h3>
+    <div class="def">
+        Комплексное число $z$ можно записать в тригонометрической форме:
+            $$z = r*(cos(\varphi) + i*sin(\varphi))$$
+        <p>где $r$ - модуль $z$, и $\varphi$ - аргумент $z$</p>
+    </div>
+    <div class="th th-small">
+        Верны следующие свойства модуля и аргумента произведения комплексных чисел:
+        $$|z_1*z_2| = |z_1|*|z_2|$$
+        $$Arg(z_1*z_2) = Arg(z_1)+Arg(z_2)$$
+    </div>
+    <div class="proof">
+    <p>$z_1*z_2 = (r_1*(cos(\varphi_1) + i*sin(\varphi_1)))*(r_2*(cos(\varphi_2) + i*sin(\varphi_2)))$ 
+    $=r_1*r_2*(cos(\varphi_1)*cos(\varphi_2) - sin(\varphi_1)*sin(\varphi_2) + (cos(\varphi_1)*sin(\varphi_2)+ sin(\varphi_1)*cos(\varphi_2))*i)$ $= r_1*r_2*(cos(\varphi_1+\varphi_2) + i*sin(\varphi_1+\varphi_2))$</p>
+    </div>
+    <p>Итак, при умножении комплексных чисел их модули перемножаются, а аргументы складываются.</p>
+    <div class="th th-then" id = "de_moivre">
+        <b>Формула Муавра</b>
+        $$z^n = r^n(cos(n\varphi) + i*sin(n\varphi))$$
+    </div>
+    <div class="th th-then">
+        При делении комплексных чисел модуль и аргумент изменяются по формулам:
+        $$|z_1/z_2| = |z_1|/|z_2|$$
+        $$Arg(z_1/z_2) = Arg(z_1)-Arg(z_2)$$
+    </div>
+    <div class="def" id="root">
+        Корнем $n$-ой степени из комплексного числа $z$, называется такое комплексное число $a$, что $a^n = z$
+    </div>
+    <div class="th th-small">
+        Комплексное число $z \ne 0$ имеет ровно $n$ корней $n$-ой степени. Корни из $z$ находятся на окружности радиуса $\sqrt{|z|}$ и делят её на $n$ равных частей.
+    </div>
+    Под $\sqrt{a}$ подразумевается арифметический корень из неотрицательного действительного числа $a$.
+    <div class="proof">
+        Утверждение следует из предыдущего <a href="#root">определения</a> и <a href="#de_moivre">формулы Муавра</a>. Действительно, если $a^n = z$ и $a = r * (cos(\varphi)+i*sin(\varphi))$, то $z = r^n(cos(n\varphi) + i*sin(n\varphi))$. Все корни $n-$ой степени из $z$ должны иметь одинаковый модуль $r$ (находиться на окружности радиуса $r$). 
+        <p>Для комплексного числа $z = R*(cos(\phi) + i*sin(\phi))$ существует ровно $n$ различных $\varphi$ таких, что $R*(cos(\phi) + i*sin(\phi)) = R*(cos(n\varphi) + i*sin(n\varphi))$. Помимо очевидного $\varphi = \frac{\phi}{n}$, $\varphi$ может принимать значения $\frac{\phi}{n} + \frac{2\pi k}{n}, k = 0,1,..n-1$</p>
+        <p>Итак, корни из $z=R*(cos(\phi) + i*sin(\phi))$ имеют вид:
+            $$\sqrt[n]{R}*(cos(\frac{\phi+2\pi k}{n}) + i*sin(\frac{\phi+2\pi k}{n})), k = 0,1,..n-1$$</p>
+    </div>
+    <h3>Представление множеств комплексных чисел на плоскости.</h3>
+    <p>Комплексному числу $z = a + bi$ можно сопоставить точку (a,b) на плоскости. Тогда первая координата точки будет действительной, а вторая - мнимой частью $z$. Соответствующие координатные оси называются действительной и мнимой осями.</p>
+    <h3>Иллюстрации</h3>
+    <script type="text/javascript">
+        function circle(ctx, coords, radius) {
+            ctx.beginPath();
+            ctx.arc(coords.x,coords.y, radius, 0 , 2*Math.PI);
+            ctx.stroke();
+        }
+        
+        function GraphController(elementId, updateFunc) {
+            this.mCoords = {x:0,y:0};
+            this.update = updateFunc.bind(this);
+            this.needUpdate = true;
+            this.elementId = elementId;
+            this.getCanvas = function() {
+                return document.getElementById(this.elementId);
+            }.bind(this);
+
+            this.point = function(ctx, z, label) {
+                ctx.font = '14px sans';
+                var p = this.toScreenCoords(z);
+                ctx.strokeText(label, p.x, p.y-14);
+                circle(ctx, p, 2);
+            }.bind(this);
+
+            this.getCoords = function(mouseevent) {
+                var rect = mouseevent.target.getBoundingClientRect();
+                this.mCoords = {
+                  x: mouseevent.clientX - rect.left,
+                  y: mouseevent.clientY - rect.top
+                };
+            }.bind(this);
+            
+            this.toLocalCoords = function(scr) {
+                return {x: (scr.x - 200)/100, y: -(scr.y - 200)/100};
+            }
+
+            this.toScreenCoords = function(loc) {
+                return {x: loc.x*100 + 200, y: -loc.y*100 + 200};
+            }
+            function redrawCanvas() {
+                var cnv = this.getCanvas();
+                var ctx = cnv.getContext('2d');
+                if(this.needUpdate){
+                    ctx.clearRect(0, 0, 400, 400);
+                    this.update(ctx);
+                    this.needUpdate = false;
+                }
+                requestAnimationFrame(redrawCanvas.bind(this))
+            }
+            
+            requestAnimationFrame(redrawCanvas.bind(this)) 
+    
+            var onLoad = function(event) {
+                this.cnv = this.getCanvas();
+                this.cnv.addEventListener('mousemove', (function(event){
+                    this.needUpdate = true;
+                    this.getCoords(event);
+                }).bind(this));
+            }.bind(this);
+
+            window.addEventListener('load', onLoad.bind(this));
+            return this;
+        }
+
+        function unitCircle(ctx) {
+            circle(ctx, {x:200,y:200}, 100);
+            ctx.moveTo(0,  200);
+            ctx.lineTo(400,200);
+            ctx.lineTo(380,205);
+            ctx.lineTo(380,195);
+            ctx.lineTo(400,200);
+            ctx.moveTo(200,400);
+            ctx.lineTo(200,  0);
+            ctx.lineTo(195, 20);
+            ctx.lineTo(205, 20);
+            ctx.lineTo(200,  0);
+            ctx.stroke();
+        }
+
+
+
+        function cmpMult(lo, ro) {
+            return {x: lo.x*ro.x - lo.y*ro.y, 
+                    y: lo.x*ro.y + lo.y*ro.x};
+        }
+
+        function updateRoots (ctx) {
+            unitCircle(ctx);
+            var z = this.toLocalCoords(this.mCoords);
+            var r  = Math.sqrt(z.x*z.x + z.y*z.y);
+            var r2 = Math.pow(r, 1/5);
+            var alpha = Math.atan2(z.y, z.x)/5;
+            var z1 = {x: r2*Math.cos(alpha) , y: r2*Math.sin(alpha)};
+            var s  = {x: Math.cos(Math.PI*2/5) , y: Math.sin(Math.PI*2/5)};
+            var z2 = cmpMult(z1, s);
+            var z3 = cmpMult(z2, s);
+            var z4 = cmpMult(z3, s);
+            var z5 = cmpMult(z4, s);
+            this.point(ctx, z,"z");
+            this.point(ctx, z1,"");
+            this.point(ctx, z2,"");
+            this.point(ctx, z3,"");
+            this.point(ctx, z4,"");
+            this.point(ctx, z5,"");
+        }
+        //todo дописать изменение a по щелчку
+        function updateMultiplication (ctx) {
+            unitCircle(ctx);
+            var z2 = this.toLocalCoords(this.mCoords);
+            var z1 = {x:1,y:-1};
+            var z3 = cmpMult(z1,z2);
+            this.point(ctx, z1,"a");
+            this.point(ctx, z2,"b");
+            this.point(ctx, z3,"a*b");
+        }
+        var cnt1 = new GraphController('canvas', updateMultiplication);
+        var cnt2 = new GraphController('canvas2',updateRoots);
+    </script>
+    <div class="canvas-wrapper">
+        <canvas id = "canvas" width="400" height="400"></canvas>
+        <span>Произведение комплексных чисел a и b</span>
+    </div>
+    <div class="canvas-wrapper">
+        <canvas id = "canvas2" width="400" height="400"></canvas>
+        <span>Корни пятой степени из комплексного числа z</span>
+    </div>
+    <!--h3>🖊️Вопросы</h3>
+    <ol>
+        <li></li>
+        <li></li>
+    </ol>
+    <ol>
+        <li class="spl"></li>
+        <li class="spl"></li>
+    </ol-->
+</div>
+</body>
+</html>
