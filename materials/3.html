@@ -154,9 +154,20 @@
     
             var onLoad = function(event) {
                 this.cnv = this.getCanvas();
-                this.cnv.addEventListener('mousemove', (function(event){
+                //this.cnv.addEventListener('mousemove', (function(event){
+                //    this.needUpdate = true;
+                //    this.getCoords(event);
+                //}).bind(this));
+
+                this.cnv.addEventListener('pointermove', (function(event){
                     this.needUpdate = true;
                     this.getCoords(event);
+                }).bind(this));
+
+                this.cnv.addEventListener('pointerdown', (function(event){
+                    this.needUpdate = true;
+                    this.getCoords(event);
+                    this.lastCoords = this.mCoords;
                 }).bind(this));
             }.bind(this);
 
@@ -209,7 +220,7 @@
         function updateMultiplication (ctx) {
             unitCircle(ctx);
             var z2 = this.toLocalCoords(this.mCoords);
-            var z1 = {x:1,y:-1};
+            var z1 = this.lastCoords ? this.toLocalCoords(this.lastCoords) : {x:1,y:-1};//{x:1,y:-1};
             var z3 = cmpMult(z1,z2);
             this.point(ctx, z1,"a");
             this.point(ctx, z2,"b");
@@ -221,6 +232,7 @@
     <div class="canvas-wrapper">
         <canvas id = "canvas" width="400" height="400"></canvas>
         <span>Произведение комплексных чисел a и b</span>
+        <span>Щёлкните мышкой чтобы изменить положение a</span>
     </div>
     <div class="canvas-wrapper">
         <canvas id = "canvas2" width="400" height="400"></canvas>
