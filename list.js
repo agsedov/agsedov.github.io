@@ -68,7 +68,7 @@ class ThemeList extends React.Component {
     });
   }
   componentDidUpdate() {
-    if(MathJax) {
+    if(typeof MathJax !== 'undefined') {
       MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
     }
   }
