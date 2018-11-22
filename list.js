@@ -46,12 +46,14 @@ class ThemeList extends React.Component {
       xmlHttp.send(null);
   }
   componentDidMount() {
-    console.log('Child did mount.');
     var json = window['json-url'];
     this.httpGetAsync.bind(this);
-    this.httpGetAsync(json, (text)=>{
+    this.httpGetAsync(json, (text) => {
         this.setState({list: JSON.parse(text).themes});
     });
+  }
+  componentDidUpdate() {
+    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
   }
   render() {
     if(this.state.list) {
