@@ -53,7 +53,9 @@ class ThemeList extends React.Component {
     });
   }
   componentDidUpdate() {
-    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    if(MathJax) {
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
   }
   render() {
     if(this.state.list) {
