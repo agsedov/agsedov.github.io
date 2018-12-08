@@ -61,7 +61,22 @@ class Question extends React.Component {
         super(props);
     }
     render() {
-        return e('li', {class: 'e-question'}, this.props.question.name);
+        var title, mark = false;
+        if(this.props.question.type == 'alg') {
+          title = 'Знать алгоритм';
+        } else if(this.props.question.type == 'def') {
+          title = 'Знать определение';
+        } else if(this.props.question.type == 'th' && this.props.question.difficulty) {
+          title = 'Доказательство может идти отдельным вопросом';
+          mark = true;
+        } else {
+          title = 'Привести доказательство';
+        }
+        return e('li', {class: 'e-question', title:title}, 
+          [
+            mark? e('div',{class:'need-proof'},'!') :'',
+            this.props.question.name
+          ]);
     }
 }
 class Theme extends React.Component {
@@ -107,7 +122,9 @@ class ThemeList extends React.Component {
     });
   }
   componentDidUpdate() {
-    MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    if(typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
   }
 
   regen(){

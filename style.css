@@ -15,11 +15,24 @@ p.hel {
  font: 200 20px/1.5 Helvetica, Verdana, sans-serif; 
 }
 
- 
+.need-proof {
+  position: absolute;
+  top:2px;
+  right: 10px;
+  padding: 2px;
+  padding-top: 0px;
+  padding-left: 12px;
+  font-size: 24px;
+  background-color:#aaaaff;
+  width: 30px;
+  height: 30px;
+}
 li.e-question {
   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
   border-bottom: 1px solid #ccc;
   padding: 5px;
+  position: relative;
+  padding-right: 40px;
 }
 
 li.e-question:hover {
