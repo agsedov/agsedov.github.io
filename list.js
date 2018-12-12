@@ -51,8 +51,7 @@ class RandomPicker {
   pickTwoThemes() {
     var p1 = this.pickThemeAndTheorem(1);
     var p2 = this.pickThemeAndTheorem(2);
-    console.log(p1);
-    console.log(p2);
+    return [p1, p2];
   }
 }
 
@@ -65,7 +64,7 @@ class Question extends React.Component {
         if(this.props.question.type == 'alg') {
           title = 'Знать алгоритм';
         } else if(this.props.question.type == 'def') {
-          title = 'Знать определение';
+          title = 'Привести определение';
         } else if(this.props.question.type == 'th' && this.props.question.difficulty) {
           title = 'Доказательство может идти отдельным вопросом';
           mark = true;
@@ -98,28 +97,79 @@ class Theme extends React.Component {
                 );
     }
 }
+
+class TicketQuestion extends React.Component {
+  prefixed(question) {
+    if(question.type == 'def'){
+      return 'Привести определение: ' + question.name;
+    }
+
+    if(question.type == 'th' && question.difficulty) {
+      return 'Привести формулировку теоремы: ' + question.name;
+    }
+
+    if(question.type == 'th') {
+      return 'Сформулировать и доказать теорему: ' + question.name;
+    }
+
+    if(question.type == 'alg') {
+      return 'Описать алгоритм: ' + question.name;
+    }
+  }
+  render() {
+    return [e('div', {}, this.props.question.name + " [10 баллов]"),
+            e('ul', {}, this.props.question.items.map(item => {
+                return e('li', {}, this.prefixed(item))})),
+            e('div', {}, "Сформулировать и доказать теорему: " + this.props.question.theorem + " [10 баллов]"),
+            ];
+  }
+}
+
+class Ticket extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    if(this.props.questions[0]) {
+      return [e(TicketQuestion,{question: this.props.questions[0]}),
+              e(TicketQuestion,{question: this.props.questions[1]})];
+    } else {
+      return null;
+    }
+  }
+}
+
+function httpGetAsync(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+
+function getQuestionsAsync() {
+  var json = window['json-url'];
+
+  httpGetAsync(json, (text) => {
+      var event = new CustomEvent('themes-loaded', { detail: text });
+      document.dispatchEvent(event);
+  });
+}
+
 class ThemeList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
-
-  httpGetAsync(theUrl, callback)
-  {
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.onreadystatechange = function() { 
-          if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-              callback(xmlHttp.responseText);
-      }
-      xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-      xmlHttp.send(null);
-  }
   componentDidMount() {
-    var json = window['json-url'];
-    this.httpGetAsync.bind(this);
-    this.httpGetAsync(json, (text) => {
-        this.setState({list: JSON.parse(text).themes});
+    document.addEventListener('themes-loaded', (e)=>{
+      this.setState({list: JSON.parse(e.detail).themes});
     });
+    getQuestionsAsync();
   }
   componentDidUpdate() {
     if(typeof MathJax !== 'undefined') {
@@ -127,17 +177,9 @@ class ThemeList extends React.Component {
     }
   }
 
-  regen(){
-    var r = new RandomPicker(this.state.list);
-    r.pickTwoThemes();
-  }
   render() {
     if(this.state.list) {
         return [
-        e(
-            'div',
-            { onClick: () => this.regen() }, 'Случайный билет'
-        ),
         e(
             'div', {},
             this.state.list.map((theme)=>
@@ -151,5 +193,40 @@ class ThemeList extends React.Component {
     }
   }
 }
+
+class RandomTicket extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {questions: []};
+  }
+  componentDidMount() {
+    document.addEventListener('themes-loaded', (e)=>{
+      this.setState({list: JSON.parse(e.detail).themes});
+    });
+    getQuestionsAsync();
+  }
+  regen(){
+    var r = new RandomPicker(this.state.list);
+    this.setState({questions: r.pickTwoThemes()});
+  }
+  render () {
+    return [,
+        e(
+            'div',
+            { onClick: () => this.regen(),
+              className: "btn btn-primary"
+            }, 'Случайный билет'
+        ),
+        e(Ticket, {questions: this.state.questions})];
+  }
+}
+
 const domContainer = document.querySelector('#themes_container');
-ReactDOM.render(e(ThemeList), domContainer); 
+if(domContainer) {
+  ReactDOM.render(e(ThemeList), domContainer);
+}
+
+const ticketContainer = document.querySelector('#random_ticket');
+if(ticketContainer) {
+  ReactDOM.render(e(RandomTicket), ticketContainer);
+}
