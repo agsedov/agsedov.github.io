@@ -117,10 +117,10 @@ class TicketQuestion extends React.Component {
     }
   }
   render() {
-    return [e('div', {}, this.props.question.name + " [10 баллов]"),
+    return [e('h5', {className:"ticket-question"}, this.props.question.name + " [10 баллов]"),
             e('ul', {}, this.props.question.items.map(item => {
                 return e('li', {}, this.prefixed(item))})),
-            e('div', {}, "Сформулировать и доказать теорему: " + this.props.question.theorem + " [10 баллов]"),
+            e('h5', {className:"ticket-question"}, "Сформулировать и доказать теорему: " + this.props.question.theorem + " [10 баллов]"),
             ];
   }
 }
@@ -129,7 +129,11 @@ class Ticket extends React.Component {
   constructor(props) {
     super(props);
   }
-
+  componentDidUpdate() {
+    if(typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+    }
+  }
   render() {
     if(this.props.questions[0]) {
       return [e(TicketQuestion,{question: this.props.questions[0]}),

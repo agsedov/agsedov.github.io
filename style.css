@@ -196,3 +196,7 @@ li a:hover {
 .canvas-wrapper {
   margin-bottom: 10px;
 }
+
+.ticket-question {
+  font-weight: bold;
+}
