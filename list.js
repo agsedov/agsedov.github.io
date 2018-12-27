@@ -41,6 +41,10 @@ class RandomPicker {
     } else {
       items = theme.items;
     }
+    while(items.length > 5) {
+      var r = Math.floor(Math.random() * items.length);
+      items.splice(r , 1);
+    }
     return {
       "name" : theme.name,
       "items": items,
@@ -218,7 +222,9 @@ class RandomTicket extends React.Component {
         e(
             'div',
             { onClick: () => this.regen(),
-              className: "btn btn-primary"
+              className: "btn btn-primary",
+              style: { 'margin-left': '42%'}
+
             }, 'Случайный билет'
         ),
         e(Ticket, {questions: this.state.questions})];
