@@ -200,3 +200,8 @@ li a:hover {
 .ticket-question {
   font-weight: bold;
 }
+
+.btn-wr {
+  width: 100%;
+  padding-bottom: 10px;
+}

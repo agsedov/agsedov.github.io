@@ -215,12 +215,13 @@ class RandomTicket extends React.Component {
   }
   render () {
     return [,
+        e(  'div',{className:"col-md-4 text-center btn-wr"},
         e(
             'div',
             { onClick: () => this.regen(),
-              className: "btn btn-primary"
+              className: "btn btn-primary btn-lg"
             }, 'Случайный билет'
-        ),
+        )),
         e(Ticket, {questions: this.state.questions})];
   }
 }
