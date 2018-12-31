@@ -41,6 +41,10 @@ class RandomPicker {
     } else {
       items = theme.items;
     }
+    while(items.length > 5) {
+      var r = Math.floor(Math.random() * items.length);
+      items.splice(r , 1);
+    }
     return {
       "name" : theme.name,
       "items": items,
@@ -216,13 +220,14 @@ class RandomTicket extends React.Component {
   render () {
     return [,
         e(  'div',{className:"col-md-4 text-center btn-wr"},
-        e(
-            'div',
-            { onClick: () => this.regen(),
-              className: "btn btn-primary btn-lg"
-            }, 'Случайный билет'
-        )),
-        e(Ticket, {questions: this.state.questions})];
+          e(
+              'div',
+              { onClick: () => this.regen(),
+                className: "btn btn-primary btn-lg",
+                style: { 'margin-left': '42%'}
+              }, 'Случайный билет'
+          ),
+          e(Ticket, {questions: this.state.questions}))];
   }
 }
 
