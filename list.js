@@ -20,23 +20,22 @@ class RandomPicker {
     var half = this.getHalf(i);
     var theorems = [];
     half.forEach((t)=>{
-      t.items.forEach((i)=>{
-        if(i.difficulty == 'hard' || i.difficulty == 'moderate') {
-          theorems.push(i.name);
+      t.items.forEach((item)=>{
+        if(item.difficulty == 'hard' || item.difficulty == 'moderate') {
+          theorems.push(item.name);
         }
       });
     });
-    
-    var theme = this.pickRandom(half);
+    var theme = Object.assign({}, this.pickRandom(half)); 
     var themeName = theme.name;
-    var items;
+    var items = theme.items;
     if(theme.items.length > 9) { //Если в теме больше 9 вопросов - поделить на 2
       var newL = Math.ceil(theme.items.length/2);
       var pickFromBegin = (Math.random() > 0.5);
       if(pickFromBegin) {
-        items = theme.items.slice(newL);
+        items.slice(newL);
       } else {
-        items = theme.items.slice(-newL);
+        items.slice(-newL);
       }
     } else {
       items = theme.items;
@@ -219,7 +218,7 @@ class RandomTicket extends React.Component {
   }
   render () {
     return [,
-        e(  'div',{className:"col-md-4 text-center btn-wr"},
+        e(  'div',{className:"col-md-4 btn-wr"},
           e(
               'div',
               { onClick: () => this.regen(),
