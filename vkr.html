@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+</script>
+<style type="text/css">
+	body {
+    	font-size: 16px;
+    	color: #333;
+	}
+
+	.centered {
+  		display: block;
+  		margin-left: auto;
+  		margin-right: auto;
+	}
+
+	.w750 {
+		width: 750px;
+	}
+</style>
+<!--script src="https://agsedov.github.io/libs/react.js"></script>
+<script src="https://agsedov.github.io/libs/react-dom.js"></script>
+<script type="text/javascript">
+	window['json-url'] = './questions-it.json';
+</script-->
+</head>
+<body>
+<div id="wrapper">
+	<h1>Курсовые работы и ВКР.</h1>
+	<section>
+		<h2>Возможные направления работы</h2>
+		<h3> Машинное обучение. </h3>
+		<p> На третьем курсе вам необходимо будет освоить основные алгоритмы машинного обучения и разобраться в устройстве нейронной сети. Курсовая работа будет посвящена вводной задаче из этой области.</p>
+
+		<p>Темы выпускной работы могут быть разными, но все они сведутся (очень вероятно) к обучению/дообучению нейронной сети. Это может быть трекинг, сегментация, оценка качества изображений.</p>
+		<h3> Компьютерное зрение. </h3>
+		<p> Вам потребуется разобраться с возможностями OpenCV и вспомнить геометрию. Желательно получить на выходе программу, умеющую обрабатывать изображение в режиме реального времени (см. пример со сканером ниже).</p>
+		<h3>Веб-приложение.</h3>
+		<p>Вариантов используемых технологий много, но важна тема. Хорошие перспективы для защиты имеет что-то подразумевающее не только работу программиста. Демонстрационный обучающий пример? Игра? Взаимодействующий с Moodle сервис?</p>
+
+		<p>Особенный интерес представляет попытка связать предыдущие темы с технологией WebRTC (основа многих систем видеосвязи).</p>
+	</section>
+	<section>
+		<h2>Темы ВКР прошлых лет</h2>
+		<h3>Алгоритмы трекинга объектов на видео</h3>
+		<img class="centered w750" src="./vkr3.jpg">
+		<p>Существуют разные алгоритмы трекинга объектов на видео. Рассмотрены способы оценки их эффективности.</p>
+
+		<h3>Сегментация медицинских изображений</h3>
+		<img class="centered w750" src="./vkr2.png">
+		<p>Выделение различных классов на медицинских видеоизображениях с использованием нейронной сети UNet.</p>
+		
+		<h3>Сканер тестов</h3>
+		<img class="centered" src="./vkr1.jpg">
+		<p>Небольшая утилита для быстрого сканирования тестов, поднесенных к видеокамере.</p>
+	</section>
+</div>
+</body>
+</html>
