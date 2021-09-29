@@ -4,7 +4,7 @@ li.e-theme {
   margin: 10;
   padding: 10;
 }
- 
+
 ul.e-question {
   list-style-type: none;
   margin: 0;
@@ -12,7 +12,7 @@ ul.e-question {
 }
 
 p.hel {
- font: 200 20px/1.5 Helvetica, Verdana, sans-serif; 
+ font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
 }
 
 .need-proof {
@@ -204,4 +204,11 @@ li a:hover {
 .btn-wr {
   width: 100%;
   padding-bottom: 10px;
+}
+
+.feedback {
+  padding: 1em;
+  background: #34ff43;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
