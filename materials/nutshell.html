@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+  <script type="text/x-mathjax-config">
+	MathJax.Hub.Config({
+	  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+	});
+  </script>
+  <style type="text/css">
+  	.tbl td{
+  		border: 1px solid black;
+  		padding: 2px;
+  	}
+
+  	.tbl th{
+  		text-align: center;
+  	}
+
+  	#wrapper{
+  		width: 1000px;
+  	}
+
+  	.spl{
+  		display: inline-block;
+  		background: black;
+  	}
+  	.spl span{
+  		visibility: hidden;
+  	}
+  	.spl:hover{
+  		background: white;
+  	}
+  	.spl:hover span{
+  		visibility: visible;
+  	}
+  	.MJXc-display {margin: 0em 0 !important;}
+  </style>
+</head>
+<body>
+	<div id="wrapper">
+	<h2>В двух словах о линейной алгебре</h2>
+  <h3>Пусть A это квадратная матрица n x n.</h3>
+	<table class="tbl">
+		<thead>
+			<tr>
+				<th>
+					Невырожденная матрица
+				</th>
+				<th>
+					Вырожденная матрица
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+      <tr>
+				<td>
+					A обладает обратной матрицей
+				</td>
+				<td>
+					A не обладает обратной матрицей
+				</td>
+			</tr>
+			<tr>
+				<td>
+					$|A| \neq 0$
+				</td>
+				<td>
+          $|A| = 0$
+				</td>
+			</tr>
+      <tr>
+				<td>
+					Строки матрицы образуют л.н.с.
+				</td>
+				<td>
+					Строки матрицы образуют л.з.с.
+				</td>
+			</tr>
+      <tr>
+        <td>
+          Столбцы матрицы образуют л.н.с.
+        </td>
+        <td>
+          Столбцы матрицы образуют л.з.с.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          $Ax = 0$ имеет единственное решение $x = 0$
+        </td>
+        <td>
+          $Ax = 0$ имеет бесконечно много решений
+        </td>
+      </tr>
+			<tr>
+        <td>
+          $Ax = b$ имеет единственное решение $x = A^{-1}b$
+        </td>
+        <td>
+          $Ax = b$ либо имеет бесконечно много решений, либо не имеет решений
+        </td>
+      </tr>
+      <tr>
+        <td>
+          $rg(A) = n$
+        </td>
+        <td>
+          $rg(A) < n$
+        </td>
+      </tr>
+			<tr>
+				<td>
+				  Приведение A к ступенчатому виду при помощи элементарных преобразований не даст нулевых строк.
+				</td>
+				<td>
+					Приведение A к ступенчатому виду при помощи элементарных преобразований даст нулевые строки.
+				</td>
+			</tr>
+      <tr>
+				<td>
+				  A можно привести к E при помощи элементарных преобразований.
+				</td>
+				<td>
+					A нельзя привести к E при помощи элементарных преобразований.
+				</td>
+			</tr>
+			<tr>
+        <th colspan="2">
+          Второй семестр
+        </th>
+			</tr>
+
+      <tr>
+        <td>
+          $dim(Col(A)) = dim(Im(A)) = n$
+        </td>
+        <td>
+          $dim(Col(A)) = dim(Im(A)) < n$
+        </td>
+      </tr>
+      <tr>
+        <td>
+          $dim(Ker(A)) = 0$
+        </td>
+        <td>
+          $dim(Ker(A)) > 0$
+        </td>
+      </tr>
+      <tr>
+        <td>
+          $dim(Row(A)) = n$
+        </td>
+        <td>
+          $dim(Row(A)) < n$
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Все собственные значения линейного отображения A ненулевые.
+        </td>
+        <td>
+          Существует собственное значение линейного отображения A равное 0.
+        </td>
+      </tr>
+
+		</tbody>
+	</table>
+	<hr>
+
+	<ol>
+		<li>Больше примеров: Gilbert Strang. "Linear Algebra and Its Applications" 4th Edition; Appendix F: Linear Algebra in a Nutshell
+		</li>
+	</ol>
+</body>
