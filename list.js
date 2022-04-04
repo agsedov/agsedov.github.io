@@ -26,7 +26,7 @@ class RandomPicker {
         }
       });
     });
-    var theme = Object.assign({}, this.pickRandom(half)); 
+    var theme = Object.assign({}, this.pickRandom(half));
     var themeName = theme.name;
     var items = theme.items;
     if(theme.items.length > 9) { //Если в теме больше 9 вопросов - поделить на 2
@@ -63,7 +63,7 @@ class Question extends React.Component {
         super(props);
     }
     render() {
-        var title, mark = false;
+        var title, mark, glossaryEntry = false;
         if(this.props.question.type == 'alg') {
           title = 'Знать алгоритм';
         } else if(this.props.question.type == 'def') {
@@ -74,10 +74,17 @@ class Question extends React.Component {
         } else {
           title = 'Привести доказательство';
         }
-        return e('li', {class: 'e-question', title:title}, 
+        if(this.props.question.glossary) {
+          glossaryEntry = this.props.question.glossary;
+        }
+        return e('li', {class: 'e-question', title:title},
           [
             mark? e('div',{class:'need-proof'},'!') :'',
-            this.props.question.name
+            glossaryEntry? e('a',{
+                                    href:'https://moodle.uniyar.ac.ru/mod/glossary/showentry.php?eid='+glossaryEntry,
+                                    target:'_blank'
+                                  },this.props.question.name) :this.props.question.name,
+
           ]);
     }
 }
@@ -87,13 +94,13 @@ class Theme extends React.Component {
     }
     render() {
         return  e('li', {class: 'e-theme'},
-                    [   
+                    [
                         this.props.theme.link?
                             e('a',{href: this.props.theme.link}, this.props.theme.name)
                             :
                             e('b',{}, this.props.theme.name),
                         e('ol',{},
-                        this.props.theme.items.map(item => 
+                        this.props.theme.items.map(item =>
                             e(Question,{question: item})
                         ))
                     ]
@@ -150,11 +157,11 @@ class Ticket extends React.Component {
 function httpGetAsync(theUrl, callback)
 {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
+    xmlHttp.onreadystatechange = function() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
             callback(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
     xmlHttp.send(null);
 }
 
