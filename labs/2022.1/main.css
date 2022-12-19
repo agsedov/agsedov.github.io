@@ -1,0 +1,200 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+ul, li, ol {
+  list-style: none;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+body {
+  width: 100%;
+  height: 10vh;
+  background: #181818;
+  position: relative;
+}
+
+:root {
+  --white:#dddddd;
+  --grey:#3f3f3f;
+  --green:#249b38;
+  --blue:#100dc5;
+  --orange:#ec8918;
+  --yellow:#eeff00;
+  --red:#a71d1d;
+}
+
+.menu {
+  position: absolute;
+  top: -10px;
+  left: 100px;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.menu .command {
+  transform-origin: 200px;
+  display: block;
+  width: 70px;
+  height: 70px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 160px;
+  visibility: hidden;
+  transition: 2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.menu .toggle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--white);
+  cursor: pointer;
+}
+.menu .toggle span {
+  position: relative;
+  display: block;
+  width: 60px;
+  height: 5px;
+  background: #000;
+  transform: rotate(0deg);
+}
+
+.menu.active .command {
+  visibility: visible;
+  transform: rotate(calc(30deg * var(--i)));
+}
+.menu.active .command a {
+  transform: rotate(calc(-30deg * var(--i)));
+  font-size: 3em;
+}
+.menu.active .toggle {
+  box-shadow: inset 0 0 40px var(--blue), 0 0 10px var(--red), 0 0 30px var(--orange), 0 0 20px var(--yellow);
+  transition: 2s;
+}
+.menu.active .toggle span {
+  -webkit-animation: animate ease-out 2s;
+          animation: animate ease-out 2s;
+  visibility: hidden;
+}
+
+@-webkit-keyframes animate {
+  0% {
+    transform: rotate(0deg);
+    visibility: visible;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+    visibility: visible;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0;
+  }
+}
+.wrapper {
+  position: relative;
+  width: 300px;
+  margin: 200px 1000px;
+  height: 300px;
+  perspective: 500px;
+}
+.wrapper .cube {
+  width: inherit;
+  height: inherit;
+  transform-style: preserve-3d;
+}
+
+.side {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  border: 6px solid #000;
+  box-shadow: 0 0px 30px #fff, 0 0 100px var(--green), 0 0 60px var(--blue), 0 0 110px var(--yellow);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.side span {
+  display: block;
+  position: relative;
+  width: 96px;
+  height: 97px;
+  border: solid var(--grey) 3px;
+  margin: 0;
+  transition: 1s;
+}
+
+.front {
+  transform: translateZ(150px);
+}
+
+.back {
+  transform: rotateY(180deg) translateZ(150px);
+}
+
+.right {
+  transform: rotateY(90deg) translateZ(150px);
+}
+
+.left {
+  transform: rotateY(-90deg) translateZ(150px);
+}
+
+.top {
+  transform: rotateX(90deg) translateZ(150px);
+}
+
+.bottom {
+  transform: rotateX(-90deg) translateZ(150px);
+}
+
+.reset {
+  position: absolute;
+  right: 50px;
+  top: -150px;
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  font-size: 14px;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 50%;
+}
+.reset img {
+  -o-object-fit: cover;
+     object-fit: cover;
+}/*# sourceMappingURL=main.css.map */
