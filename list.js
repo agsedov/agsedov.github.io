@@ -79,7 +79,7 @@ class Question extends React.Component {
         }
         return e('li', {class: 'e-question', title:title},
           [
-            mark? e('div',{class:'need-proof'},'!') :'',
+            mark? e('div',{class:'need-proof'},'💎') :'',
             glossaryEntry? e('a',{
                                     href:'https://moodle.uniyar.ac.ru/mod/glossary/showentry.php?eid='+glossaryEntry,
                                     target:'_blank'
