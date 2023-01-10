@@ -15,6 +15,25 @@ p.hel {
  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
 }
 
+.ticket_outer {
+  padding: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+  width: 100%;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.2);
+  flex-direction: row;
+  display: flex;
+}
+.ticket {
+}
+.theorem_el {
+  background-color: #EFF;
+}
+
+.alg_el {
+  background-color: #FEF;
+}
+
 .need-proof {
   position: absolute;
   top:2px;

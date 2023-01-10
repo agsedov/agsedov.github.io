@@ -1,37 +1,55 @@
 'use strict';
+//import "https://unpkg.com/qrcode-generator@1.4.4/qrcode.js";
 
 const e = React.createElement;
 
+function RNG(seed) {
+  // LCG using GCC's constants
+  this.m = 0x80000000; // 2**31;
+  this.a = 1103515245;
+  this.c = 12345;
+
+  this.state = seed ? seed : Math.floor(Math.random() * (this.m - 1));
+}
+RNG.prototype.nextInt = function() {
+  this.state = (this.a * this.state + this.c) % this.m;
+  return this.state;
+}
+var rng;
 class RandomPicker {
-  constructor(list) {
+  constructor(list, rng_state) {
     this.list = list;
+    rng = new RNG();
+    if(rng_state) {
+      console.log("1",rng_state);
+      rng.state = rng_state;
+    } else {
+      console.log("2",rng_state);
+      this.rng_state = rng.nextInt();
+    }
   }
 
-  getHalf(i) {
-    return this.list.filter(e => e.h === i);
-  }
-
-  pickRandom(ar) {
+  pickRandom = (ar) => {
     var l = ar.length;
-    var n = Math.floor((Math.random() * l));
+    var n = rng.nextInt()%l; //Math.floor((Math.random() * l));
     return ar[n];
   }
-  pickThemeAndTheorem(i) {
-    var half = this.getHalf(i);
+  pickThemeAndTheorem = (i) => {
+    //var half = this.list;
     var theorems = [];
-    half.forEach((t)=>{
+    this.list.forEach((t)=>{
       t.items.forEach((item)=>{
         if(item.difficulty == 'hard' || item.difficulty == 'moderate') {
           theorems.push(item.name);
         }
       });
     });
-    var theme = Object.assign({}, this.pickRandom(half));
-    var themeName = theme.name;
+    var theme = JSON.parse(JSON.stringify(this.pickRandom(this.list)));
+    //return;
     var items = theme.items;
     if(theme.items.length > 9) { //Если в теме больше 9 вопросов - поделить на 2
       var newL = Math.ceil(theme.items.length/2);
-      var pickFromBegin = (Math.random() > 0.5);
+      var pickFromBegin = (rng.nextInt()%2 > 0);
       if(pickFromBegin) {
         items.slice(newL);
       } else {
@@ -41,20 +59,20 @@ class RandomPicker {
       items = theme.items;
     }
     while(items.length > 5) {
-      var r = Math.floor(Math.random() * items.length);
+      var r = rng.nextInt() % items.length;
       items.splice(r , 1);
     }
     return {
       "name" : theme.name,
       "items": items,
-      "theorem": this.pickRandom(theorems)
+      "theorem": this.pickRandom(theorems),
+      "rng_state": this.rng_state
     }
   }
 
-  pickTwoThemes() {
+  pickOneTheme() {
     var p1 = this.pickThemeAndTheorem(1);
-    var p2 = this.pickThemeAndTheorem(2);
-    return [p1, p2];
+    return [p1];
   }
 }
 
@@ -63,21 +81,26 @@ class Question extends React.Component {
         super(props);
     }
     render() {
-        var title, mark, glossaryEntry = false;
+        var title, mark, glossaryEntry, theorem, alg = false;
         if(this.props.question.type == 'alg') {
           title = 'Знать алгоритм';
+          alg = true;
         } else if(this.props.question.type == 'def') {
           title = 'Привести определение';
         } else if(this.props.question.type == 'th' && this.props.question.difficulty) {
           title = 'Доказательство может идти отдельным вопросом';
           mark = true;
+          theorem = true;
         } else {
+          theorem = true;
           title = 'Привести доказательство';
         }
         if(this.props.question.glossary) {
           glossaryEntry = this.props.question.glossary;
         }
-        return e('li', {class: 'e-question', title:title},
+      var element_class = "e-question"+(theorem?" theorem_el":"")+(alg?" alg_el":"");
+      return e('li', {class: element_class, title:title},
+
           [
             mark? e('div',{class:'need-proof'},'💎') :'',
             glossaryEntry? e('a',{
@@ -127,11 +150,12 @@ class TicketQuestion extends React.Component {
     }
   }
   render() {
-    return [e('h5', {className:"ticket-question"}, this.props.question.name + " [10 баллов]"),
-            e('ul', {}, this.props.question.items.map(item => {
+    return [e('div',{className:"ticket"},
+              e('h5', {className:"ticket-question"}, this.props.question.name),
+              e('ul', {}, this.props.question.items.map(item => {
                 return e('li', {}, this.prefixed(item))})),
-            e('h5', {className:"ticket-question"}, "Сформулировать и доказать теорему: " + this.props.question.theorem + " [10 баллов]"),
-            ];
+              e('h5', {className:"ticket-question"}, "Сформулировать и доказать теорему: " + this.props.question.theorem),
+    )];
   }
 }
 
@@ -146,8 +170,7 @@ class Ticket extends React.Component {
   }
   render() {
     if(this.props.questions[0]) {
-      return [e(TicketQuestion,{question: this.props.questions[0]}),
-              e(TicketQuestion,{question: this.props.questions[1]})];
+      return [e(TicketQuestion,{question: this.props.questions[0]})];
     } else {
       return null;
     }
@@ -216,12 +239,24 @@ class RandomTicket extends React.Component {
   componentDidMount() {
     document.addEventListener('themes-loaded', (e)=>{
       this.setState({list: JSON.parse(e.detail).themes});
+      this.regen();
     });
     getQuestionsAsync();
   }
   regen(){
-    var r = new RandomPicker(this.state.list);
-    this.setState({questions: r.pickTwoThemes()});
+    var rng_state = location.hash?Number.parseInt(location.hash.substring(1)):false;
+    var r = new RandomPicker(this.state.list, rng_state);
+    var theme = r.pickOneTheme();
+    rng_state = theme[0].rng_state;
+    var typeNumber = 0;
+    var errorCorrectionLevel = 'H';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    var data = location.hash?location.href:(location.href + "#" + rng_state);
+    qr.addData(data);
+    qr.make();
+    var qr_tag = qr.createImgTag();
+    this.setState({questions: theme});
+    this.refs.test.innerHTML = qr_tag;
   }
   render () {
     return [,
@@ -232,8 +267,12 @@ class RandomTicket extends React.Component {
                 className: "btn btn-primary btn-lg",
                 style: { 'margin-left': '42%'}
               }, 'Случайный билет'
-          ),
-          e(Ticket, {questions: this.state.questions}))];
+          )),
+      e("div",{class:"ticket_outer"},
+        e("div", {contentEditable:'true', ref:'test'},),
+        e(Ticket, {questions: this.state.questions}),
+      )
+    ];
   }
 }
 
